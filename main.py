@@ -1,4 +1,5 @@
-from stats import count_words, character_frequency  # Import functions from stats.py
+import sys
+from stats import count_words, character_frequency, sorted_character_frequency  # Import functions from stats.py
 
 def get_book_text(filepath):
     """
@@ -14,22 +15,36 @@ def get_book_text(filepath):
 
 def main():
     """
-    Reads the content of frankenstein.txt, calculates word count and character frequencies,
-    and prints the results to the console.
+    Reads the content of a user-specified book file, calculates word count and sorted character frequencies,
+    and prints the report in the specified format.
     """
-    filepath = "books/frankenstein.txt"  # Relative path to the file
+    # Ensure the correct number of arguments are provided
+    if len(sys.argv) != 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)  # Exit the program with an error status
+
+    filepath = sys.argv[1]  # Get the file path from the command line argument
     book_content = get_book_text(filepath)
 
     if "Error:" not in book_content:  # Check if the file was successfully read
         word_count = count_words(book_content)  # Get the word count
-        print(f"{word_count} words found in the document")
-        
         char_freq = character_frequency(book_content)  # Get character frequencies
-        print("\nCharacter Frequencies:")
-        print(char_freq)
+        sorted_freq = sorted_character_frequency(char_freq)  # Sort and filter character frequencies
+        
+        # Print the formatted report
+        print("============ BOOKBOT ============")
+        print(f"Analyzing book found at {filepath}...")
+        print("----------- Word Count ----------")
+        print(f"Found {word_count} total words")
+        print("--------- Character Count -------")
+        
+        for entry in sorted_freq:
+            print(f"{entry['character']}: {entry['count']}")
+
+        print("============= END ===============")
     else:
         print(book_content)  # Print the error message if the file could not be read
 
-# Example usage
+# Run the script
 if __name__ == "__main__":
     main()
