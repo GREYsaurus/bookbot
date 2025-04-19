@@ -1,10 +1,8 @@
 import sys
-from stats import count_words, character_frequency, sorted_character_frequency  # Import functions from stats.py
+from stats import count_words, character_frequency, sorted_character_frequency  
 
 def get_book_text(filepath):
-    """
-    Reads the content of a file and returns it as a string.
-    """
+  
     try:
         with open(filepath, 'r') as file:
             return file.read()
@@ -14,24 +12,21 @@ def get_book_text(filepath):
         return f"An unexpected error occurred: {e}"
 
 def main():
-    """
-    Reads the content of a user-specified book file, calculates word count and sorted character frequencies,
-    and prints the report in the specified format.
-    """
-    # Ensure the correct number of arguments are provided
+  
+   
     if len(sys.argv) != 2:
         print("Usage: python3 main.py <path_to_book>")
-        sys.exit(1)  # Exit the program with an error status
+        sys.exit(1)  
 
-    filepath = sys.argv[1]  # Get the file path from the command line argument
+    filepath = sys.argv[1]  
     book_content = get_book_text(filepath)
 
-    if "Error:" not in book_content:  # Check if the file was successfully read
-        word_count = count_words(book_content)  # Get the word count
-        char_freq = character_frequency(book_content)  # Get character frequencies
-        sorted_freq = sorted_character_frequency(char_freq)  # Sort and filter character frequencies
+    if "Error:" not in book_content:  
+        word_count = count_words(book_content)  
+        char_freq = character_frequency(book_content)  
+        sorted_freq = sorted_character_frequency(char_freq)  
         
-        # Print the formatted report
+        
         print("============ BOOKBOT ============")
         print(f"Analyzing book found at {filepath}...")
         print("----------- Word Count ----------")
@@ -43,8 +38,8 @@ def main():
 
         print("============= END ===============")
     else:
-        print(book_content)  # Print the error message if the file could not be read
+        print(book_content)  
 
-# Run the script
+
 if __name__ == "__main__":
     main()
